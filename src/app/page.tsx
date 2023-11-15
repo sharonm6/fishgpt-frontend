@@ -1,4 +1,5 @@
 "use client";
+import SocketInitializer from './webrtc/components/socketInitializer'
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -48,6 +49,7 @@ export default function Home() {
           setLoading={setLoading}
         />
       </div>
+      <SocketInitializer />
     </main>
   );
 }
