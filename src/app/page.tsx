@@ -1,5 +1,5 @@
 "use client";
-import SocketInitializer from './webrtc/components/socketInitializer'
+import SocketInitializer from "./webrtc/components/socketInitializer";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen p-20">
-      <div className="w-full self-end flex flex-col gap-y-4">
+      <div className="w-[80%] mx-auto self-end flex flex-col gap-y-4">
         {question && (
           <AnimatePresence>
             <motion.div
