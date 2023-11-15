@@ -1,7 +1,5 @@
-import { NextResponse } from "next/server";
-
 const apiKey = process.env.CHATGPT_API_KEY;
-const endpoint = "https://api.openai.com/v1/engines/davinci/completions";
+const endpoint = "https://api.openai.com/v1/chat/completions";
 
 export async function POST(request: Request) {
   const headers = {
@@ -12,8 +10,15 @@ export async function POST(request: Request) {
   const message = await request.json();
 
   const requestBody = {
-    prompt: message.prompt,
-    max_tokens: 5,
+    model: "gpt-3.5-turbo-1106",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are a helpful assistant. Give us four different answers to the question in four separate sentences separated by a newline character.",
+      },
+      { role: "user", content: message.prompt },
+    ],
   };
 
   const response = await fetch(endpoint, {
@@ -23,11 +28,11 @@ export async function POST(request: Request) {
   });
 
   const data = await response.json();
-  console.log("RESPONSE: ", data);
+  const answer = data.choices[0].message;
 
   if (!data) {
     return new Response("Error", { status: 500 });
   }
 
-  return NextResponse.json({ data });
+  return Response.json({ data: answer });
 }
