@@ -13,7 +13,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex min-h-screen p-20">
+    <main className="flex flex-row justify-between h-screen p-20 gap-8">
       <div className="w-[80%] mx-auto self-end flex flex-col gap-y-4">
         {question && (
           <AnimatePresence>
@@ -49,7 +49,9 @@ export default function Home() {
           setLoading={setLoading}
         />
       </div>
-      <SocketInitializer />
+      <div className="flex self-center">
+        <SocketInitializer />
+      </div>
     </main>
   );
 }

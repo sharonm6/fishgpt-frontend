@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import * as socketio from "socket.io-client";
 export default function SocketInitializer() {
+  const [imageSrc, setImageSrc] = useState("");
+
   useEffect(() => {
-    const socket = socketio.io("https://e242-76-78-137-148.ngrok-free.app/");
+    const socket = socketio.io("https://fishgpt-backend.dylanvu9.repl.co/");
 
     socket.on("connect", async () => {
       console.log("Successfully connected to FishGPT backend!");
@@ -20,14 +22,30 @@ export default function SocketInitializer() {
     });
 
     socket.on("imageReceive", (data) => {
+      const uint8Array = new Uint8Array(
+        atob(data.data)
+          .split("")
+          .map((char) => char.charCodeAt(0))
+      );
+
+      const blob = new Blob([uint8Array], { type: "image/jpeg" });
+      setImageSrc(URL.createObjectURL(blob));
+    });
+
+    socket.on("coordsReceive", (data) => {
       console.log(data);
     });
 
     return () => {
-      // do this to prevent 2x connections
       socket.disconnect();
     };
   }, []);
 
-  return <div>socket component</div>;
+  return (
+    <>
+      {imageSrc && (
+        <img src={imageSrc} alt="Received Image" className="w-fit" />
+      )}
+    </>
+  );
 }
