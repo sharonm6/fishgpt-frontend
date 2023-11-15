@@ -10,16 +10,20 @@ export default function SocketInitializer() {
         socket.on("connect", async () => {
             console.log("Successfully connected to FishGPT backend!");
             // create a webRTC offer
-            const rtcp = new RTCPeerConnection();
-            const offer = await rtcp.createOffer();
-            // send this offer to the backend to send to the python client
-            console.log(offer);
-            const offer_obj = {
-                type: offer.type,
-                sdp: offer.sdp
-            }
-            socket.emit('clientOffer', offer_obj);
+            // const rtcp = new RTCPeerConnection();
+            // const offer = await rtcp.createOffer();
+            // // send this offer to the backend to send to the python client
+            // console.log(offer);
+            // const offer_obj = {
+            //     type: offer.type,
+            //     sdp: offer.sdp
+            // }
+            // socket.emit('clientOffer', offer_obj);
         });
+
+        socket.on("imageReceive", (data) => {
+            console.log(data);
+        })
 
         return () => {
             // do this to prevent 2x connections
