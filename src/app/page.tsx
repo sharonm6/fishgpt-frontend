@@ -1,18 +1,19 @@
 'use client';
 import {useState} from 'react';
-import answerJson from '../lib/answer.json';
 import Textbox from './textbox';
+import DisplayBox from './displaybox';
 
 export default function Home() {
   const [question, setQuestion] = useState('');
-  const [answers, setAnswers] = useState(answerJson);
+  const [answers, setAnswers] = useState(['']);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <p>Hi</p>
-      <p>Question: {question}</p>
-      <p>Possible Answers are: {answers}</p>
-      <Textbox setQuestion={setQuestion} setAnswers={setAnswers} />
+    <main className="flex min-h-screen p-20">
+      <div className="w-full self-end flex flex-col gap-y-4">
+        {question && <DisplayBox texts={[question]} />}
+        {answers && answers[0] && <DisplayBox texts={answers} />}
+        <Textbox setQuestion={setQuestion} setAnswers={setAnswers} />
+      </div>
     </main>
   )
 }
