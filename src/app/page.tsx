@@ -13,7 +13,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex flex-row justify-between h-screen p-20 gap-8">
+    <main className="flex flex-row justify-between h-screen p-20 gap-12 bg-[url('/background.png')] bg-cover bg-center bg-no-repeat">
       <div className="w-[80%] mx-auto self-end flex flex-col gap-y-4">
         {question && (
           <AnimatePresence>
@@ -49,7 +49,7 @@ export default function Home() {
           setLoading={setLoading}
         />
       </div>
-      <div className="flex self-center">
+      <div className="flex self-center h-96 bg-blue-500">
         <SocketInitializer />
       </div>
     </main>
