@@ -15,7 +15,7 @@ export async function POST(request: Request) {
       {
         role: "system",
         content:
-          "You are a helpful assistant. Give us four different answers to the question in four separate sentences separated by a newline character.",
+          "You are a helpful assistant. Your name is FishGPT. Give us four different answers to the question in four separate sentences separated by a newline character.",
       },
       { role: "user", content: message.prompt },
     ],
