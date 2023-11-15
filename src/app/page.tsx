@@ -1,19 +1,53 @@
-'use client';
-import {useState} from 'react';
-import Textbox from './textbox';
-import DisplayBox from './displaybox';
+"use client";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
+import Textbox from "./textbox";
+import DisplayBox from "./displaybox";
 
 export default function Home() {
-  const [question, setQuestion] = useState('');
-  const [answers, setAnswers] = useState(['']);
+  const [question, setQuestion] = useState("");
+  const [answers, setAnswers] = useState([""]);
+  const [toggle, setToggle] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <main className="flex min-h-screen p-20">
       <div className="w-full self-end flex flex-col gap-y-4">
-        {question && <DisplayBox text={question} isQuestion={true} />}
-        {answers && answers[0] && <DisplayBox text={answers[0]}/>}
-        <Textbox setQuestion={setQuestion} setAnswers={setAnswers} />
+        {question && (
+          <AnimatePresence>
+            <motion.div
+              key={`question-${toggle}`}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: "spring" }}
+            >
+              <DisplayBox text={question} isQuestion={true} />
+            </motion.div>
+          </AnimatePresence>
+        )}
+        {answers && answers[0] && (
+          <AnimatePresence>
+            <motion.div
+              key={`answer-${toggle}`}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: "spring" }}
+            >
+              <DisplayBox text={answers[0]} setLoading={setLoading} />
+            </motion.div>
+          </AnimatePresence>
+        )}
+        <Textbox
+          setQuestion={setQuestion}
+          setAnswers={setAnswers}
+          setToggle={setToggle}
+          loading={loading}
+          setLoading={setLoading}
+        />
       </div>
     </main>
-  )
+  );
 }
