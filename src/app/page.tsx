@@ -19,8 +19,8 @@ export default function Home() {
         <SocketInitializer />
         <div className="row-span-2">FishGPT</div>
       </div>
-      <div className="col-span-4 h-full p-8 bg-red-300">
-        <div className="h-full w-[90%] mx-auto flex flex-col-reverse gap-y-4">
+      <div className="col-span-4 h-full p-8 bg-red-300 flex items-end">
+        <div className="w-[85%] mx-auto flex flex-col gap-y-4">
           {question && (
             <AnimatePresence>
               <motion.div

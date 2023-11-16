@@ -42,10 +42,10 @@ export default function SocketInitializer() {
   }, []);
 
   return (
-    <div className="row-span-4 bg-purple-300">
-      {/* <img src="/blue.png" alt="blue" /> */}
-      {/* <div className="w-[644.355px] h-[483.255px] bg-blue-300"></div> */}
-      {/* {imageSrc && <img src={imageSrc} alt="Received Image" />} */}
+    <div className="row-span-4 bg-black flex justify-center">
+      {imageSrc && (
+        <img className="h-full" src={imageSrc} alt="Received Image" />
+      )}
     </div>
   );
 }
