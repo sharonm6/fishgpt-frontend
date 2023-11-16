@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import Textbox from "./textbox";
 import DisplayBox from "./displaybox";
+import ThoughtBubble from "./thoughtbubble";
 
 export default function Home() {
   const [question, setQuestion] = useState("");
@@ -51,6 +52,9 @@ export default function Home() {
       </div>
       <div className="flex self-center h-96 bg-blue-500">
         <SocketInitializer />
+      </div>
+      <div>
+        <ThoughtBubble text="hello, i am a thought bubble"></ThoughtBubble>
       </div>
     </main>
   );
