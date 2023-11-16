@@ -14,48 +14,51 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex flex-row justify-between h-screen p-20 gap-12 bg-[url('/background.png')] bg-cover bg-center bg-no-repeat">
-      <div className="w-[80%] mx-auto self-end flex flex-col gap-y-4">
-        {question && (
-          <AnimatePresence>
-            <motion.div
-              key={`question-${toggle}`}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring" }}
-            >
-              <DisplayBox text={question} isQuestion={true} />
-            </motion.div>
-          </AnimatePresence>
-        )}
-        {answers && answers[0] && (
-          <AnimatePresence>
-            <motion.div
-              key={`answer-${toggle}`}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring" }}
-            >
-              <DisplayBox text={answers[0]} setLoading={setLoading} />
-            </motion.div>
-          </AnimatePresence>
-        )}
-        <Textbox
-          setQuestion={setQuestion}
-          setAnswers={setAnswers}
-          setToggle={setToggle}
-          loading={loading}
-          setLoading={setLoading}
-        />
-      </div>
-      <div className="flex self-center h-96 bg-blue-500">
+    <main className="grid grid-cols-12 h-screen bg-[url('/background.png')] bg-cover bg-center bg-no-repeat">
+      <div className="col-span-8 grid grid-rows-6 bg-green-300">
         <SocketInitializer />
+        <div className="row-span-2">FishGPT</div>
       </div>
-      <div>
+      <div className="col-span-4 h-full p-8 bg-red-300">
+        <div className="h-full w-[90%] mx-auto flex flex-col-reverse gap-y-4">
+          {question && (
+            <AnimatePresence>
+              <motion.div
+                key={`question-${toggle}`}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring" }}
+              >
+                <DisplayBox text={question} isQuestion={true} />
+              </motion.div>
+            </AnimatePresence>
+          )}
+          {answers && answers[0] && (
+            <AnimatePresence>
+              <motion.div
+                key={`answer-${toggle}`}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring" }}
+              >
+                <DisplayBox text={answers[0]} setLoading={setLoading} />
+              </motion.div>
+            </AnimatePresence>
+          )}
+          <Textbox
+            setQuestion={setQuestion}
+            setAnswers={setAnswers}
+            setToggle={setToggle}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        </div>
+      </div>
+      {/* <div>
         <ThoughtBubble text="hello, i am a thought bubble"></ThoughtBubble>
-      </div>
+      </div> */}
     </main>
   );
 }
