@@ -6,17 +6,20 @@ export default function Textbox({
   setToggle,
   loading,
   setLoading,
+  moveToPastTexts,
 }: {
   setQuestion: Dispatch<SetStateAction<string>>;
   setAnswers: Dispatch<SetStateAction<string[]>>;
   setToggle: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  moveToPastTexts: Function;
 }) {
   const [inputText, setInputText] = useState("");
 
   const handleKeyPress = async (event: KeyboardEvent<HTMLInputElement>) => {
     if (!loading && event.key === "Enter") {
+      moveToPastTexts();
       setAnswers([""]);
       setLoading(true);
       setToggle((prev) => !prev);

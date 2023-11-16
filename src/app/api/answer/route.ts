@@ -35,4 +35,7 @@ export async function POST(request: Request) {
   }
 
   return Response.json({ data: answer });
+  // return Response.json({
+  //   data: { content: "The sky is blue." },
+  // });
 }
