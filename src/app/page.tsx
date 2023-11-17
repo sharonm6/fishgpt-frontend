@@ -22,6 +22,7 @@ export default function Home() {
   );
   const [isErr, setIsErr] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [viewers, setViewers] = useState(0);
 
   useEffect(() => {
     const getStatus = async () => {
@@ -62,13 +63,16 @@ export default function Home() {
             connected={connected}
             setConnected={setConnected}
             setChoice={setChoice}
+            setViewers={setViewers}
           />
           <div className="row-span-2 bg-gray-800">
             <StreamerInfo
               username="FishGPT"
-              status={connected ? "LIVE" : "OFFLINE"}
+              // status={connected ? "LIVE" : "OFFLINE"}
+              status="LIVE"
               profilePic="/goldfish.png"
               activity={activity}
+              viewers={viewers}
             ></StreamerInfo>
             <div className="rounded-lg mx-6 mb-4 bg-gray-700 p-4 text-white">
               {`FishGPT is an online chatbot built with ChatGPT that allows a

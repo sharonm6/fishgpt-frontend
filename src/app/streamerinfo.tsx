@@ -3,6 +3,7 @@ interface StreamerInfoProps {
   activity: string;
   status: string;
   profilePic: string;
+  viewers?: number;
 }
 
 const StreamerInfo: React.FC<StreamerInfoProps> = ({
@@ -10,6 +11,7 @@ const StreamerInfo: React.FC<StreamerInfoProps> = ({
   activity,
   status,
   profilePic,
+  viewers
 }) => {
   return (
     <div className="bg-gray-800 text-white p-4 flex items-start space-x-4">
@@ -30,6 +32,16 @@ const StreamerInfo: React.FC<StreamerInfoProps> = ({
       <div>
         <div className="text-lg font-bold">{username}</div>
         <div className="text-md">{activity}</div>
+        {status === 'LIVE' && (
+          <div className="text-sm flex items-center">
+            <span className="mr-1">{viewers} viewers</span>
+            <img
+              src="/viewers.png" // Replace with your human icon image path
+              alt="Viewers"
+              className="w-4 h-4"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

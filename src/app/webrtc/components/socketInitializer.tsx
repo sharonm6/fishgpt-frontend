@@ -7,10 +7,12 @@ export default function SocketInitializer({
   connected,
   setConnected,
   setChoice,
+  setViewers
 }: {
   connected: boolean;
   setConnected: Dispatch<SetStateAction<boolean>>;
   setChoice: Dispatch<SetStateAction<number>>;
+  setViewers: Dispatch<SetStateAction<number>>;
 }) {
   const [imageSrc, setImageSrc] = useState("");
 
@@ -43,6 +45,7 @@ export default function SocketInitializer({
 
     socket.on("sendViewCount", (data) => {
       console.log(`The new view count is: ${data.data}`);
+      setViewers(data.data);
     });
 
     return () => {
