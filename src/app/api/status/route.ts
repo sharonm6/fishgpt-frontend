@@ -8,17 +8,15 @@ export async function POST(request: Request) {
   };
 
   const message = await request.json();
-  
+
   const requestBody = {
     model: "gpt-3.5-turbo",
     messages: [
       {
         role: "system",
-        content:
-          "You are a helpful assistant. Your name is FishGPT.",
+        content: "You are a helpful assistant. Your name is FishGPT.",
       },
-      { role: "user", content: message.prompt
-    }
+      { role: "user", content: message.prompt },
     ],
   };
 
@@ -33,6 +31,9 @@ export async function POST(request: Request) {
     const answer = data.choices[0].message;
     return Response.json({ data: answer });
   } catch (e) {
-    return new Response("Error", { status: 500 });
+    return new Response(
+      "Uh-oh! Our fish swam away from the keyboard. Please reel them back in and try again later!",
+      { status: 500 }
+    );
   }
 }

@@ -30,8 +30,11 @@ export async function POST(request: Request) {
 
     const data = await response.json();
     const answer = data.choices[0].message;
+    console.log("ANS", answer);
     return Response.json({ data: answer });
   } catch (e) {
-    return new Response("Error", { status: 500 });
+    return new Response("Error", {
+      status: 500,
+    });
   }
 }

@@ -8,12 +8,13 @@ import {
 
 export default function Textbox({
   setQuestion,
-    setAnswers,
+  setAnswers,
   setToggle,
   loading,
   setLoading,
   moveToPastTexts,
   chatContainerRef,
+  setIsErr,
 }: {
   setQuestion: Dispatch<SetStateAction<string>>;
   setAnswers: Dispatch<SetStateAction<string[]>>;
@@ -22,6 +23,7 @@ export default function Textbox({
   setLoading: Dispatch<SetStateAction<boolean>>;
   moveToPastTexts: Function;
   chatContainerRef: RefObject<HTMLDivElement>;
+  setIsErr: Dispatch<SetStateAction<boolean>>;
 }) {
   const [inputText, setInputText] = useState("");
 
@@ -31,6 +33,7 @@ export default function Textbox({
       setAnswers([""]);
       setLoading(true);
       setToggle((prev) => !prev);
+      setIsErr(false);
       setQuestion(inputText);
       setInputText("");
       () =>
@@ -46,10 +49,22 @@ export default function Textbox({
           },
           body: JSON.stringify({ prompt: inputText }),
         })
-          .then((res) => res.json())
-          .then((resJson) => setAnswers(resJson.data.content.split("\n")));
+          .then((res) => {
+            if (!res.ok) {
+              console.log("error", res);
+            }
+            return res.json();
+          })
+          .then((resJson) => {
+            console.log("resJson", resJson.data.content.split("\n"));
+            setAnswers(resJson.data.content.split("\n"));
+          });
       } catch (error) {
         console.error(error);
+        setIsErr(true);
+        setAnswers([
+          "Uh-oh! Our fish swam away from the keyboard. Please reel them back in and try again later!",
+        ]);
       }
     }
   };

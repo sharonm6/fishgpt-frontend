@@ -13,18 +13,14 @@ export default function Home() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState([""]);
-  const [choice, setChoice] = useState(-1);
-  const [pastTexts, setPastTexts] = useState<string[]>([
-    "Example Question",
-    "Example Answer",
-    "Second Question",
-    "Second Answer",
-  ]);
+  const [choice, setChoice] = useState(0);
+  const [pastTexts, setPastTexts] = useState<string[]>([]);
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activity, setActivity] = useState(
     `"Swimming through life's waves 🌊"`
   );
+  const [isErr, setIsErr] = useState(false);
 
   const [connected, setConnected] = useState(false);
 
@@ -36,12 +32,14 @@ export default function Home() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ prompt: 'Generate a fun status blurb that is less than 5 words.' }),
+          body: JSON.stringify({
+            prompt: "Generate a fun status blurb that is less than 5 words.",
+          }),
         })
           .then((res) => res.json())
           .then((resJson) => setActivity(resJson.data.content));
       } catch (error) {
-        console.error(error);
+        console.error("error");
       }
     };
 
@@ -106,7 +104,7 @@ export default function Home() {
                       transition={{ type: "spring" }}
                     >
                       <DisplayBox
-                        text={answers[0]}
+                        text={isErr ? answers[0] : answers[choice]}
                         setLoading={setLoading}
                         loading={loading}
                       />
@@ -125,6 +123,7 @@ export default function Home() {
                 setLoading={setLoading}
                 moveToPastTexts={moveToPastTexts}
                 chatContainerRef={chatContainerRef}
+                setIsErr={setIsErr}
               />
             </div>
           </div>
