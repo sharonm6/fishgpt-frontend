@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen">
+    <main className="h-screen overflow-y-clip scrollbar-hide">
       <NavBar />
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">

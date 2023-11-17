@@ -13,7 +13,7 @@ export default function SocketInitializer() {
   };
 
   useEffect(() => {
-    const socket = socketio.io("https://fishgpt-backend.dylanvu9.repl.co/");
+    const socket = socketio.io("https://marshy-glaze-brazil.glitch.me/");
 
     socket.on("connect", async () => {
       console.log("Successfully connected to FishGPT backend!");
