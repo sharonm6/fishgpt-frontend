@@ -15,7 +15,8 @@ export default function SocketInitializer({
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
-    const socket = socketio.io("https://ea1b-76-78-137-157.ngrok-free.app/", {
+    // TODO: change the url to be the right one
+    const socket = socketio.io("http://localhost:5000", {
       extraHeaders: {
         "ngrok-skip-browser-warning": "true",
       },
@@ -40,6 +41,11 @@ export default function SocketInitializer({
       const imageUrl = URL.createObjectURL(blob);
       setImageSrc(imageUrl);
     });
+
+    socket.on("sendViewCount", (data) => {
+      console.log(`The new view count is: ${data.data}`);
+    });
+
     return () => {
       socket.disconnect();
       setConnected(false);
@@ -51,7 +57,7 @@ export default function SocketInitializer({
       {connected ? (
         <>
           {imageSrc && (
-              <img className="h-full" src={imageSrc} alt="Received Image" />
+            <img className="h-full" src={imageSrc} alt="Received Image" />
           )}
         </>
       ) : (
