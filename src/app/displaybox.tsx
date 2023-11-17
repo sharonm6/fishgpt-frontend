@@ -1,21 +1,46 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 
 export default function DisplayBox({
   text,
   isQuestion = false,
   setLoading = () => {},
+  loading = false,
   isPast = false,
 }: {
   text: String;
   isQuestion?: boolean;
   setLoading?: Function;
+  loading?: boolean;
   isPast?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
 
+  useEffect(() => {
+    let intervalId: any;
+
+    const scrollIntoViewInterval = () => {
+      if (ref.current) {
+        ref.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      }
+    };
+
+    // Start the interval when loading is true
+    if (loading === true) {
+      intervalId = setInterval(scrollIntoViewInterval, 1000);
+    } else if (loading === false) {
+      scrollIntoViewInterval();
+    }
+
+    // Clear the interval when loading is false
+    return () => clearInterval(intervalId);
+  }, [loading]);
+
   return (
-    <div className="flex items-center">
+    <div className="flex items-start">
       {isQuestion ? (
         <img
           src="/humanicon.png"

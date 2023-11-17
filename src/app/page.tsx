@@ -26,64 +26,55 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    // Function to scroll chat container to the bottom
-    const scrollToBottom = () => {
-      if (chatContainerRef.current) {
-        chatContainerRef.current.scrollTop =
-          chatContainerRef.current.scrollHeight;
-      }
-    };
-    // Scroll to bottom whenever messages change
-    scrollToBottom();
-  }, [pastTexts]);
-
   return (
     <main className="h-screen">
       <NavBar />
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
-        <div className="col-span-8 grid grid-rows-6 bg-blue-300">
+        <div className="col-span-7 grid grid-rows-6 bg-blue-300">
           <SocketInitializer />
           <div className="row-span-2">FishGPT</div>
         </div>
-        <div className="col-span-4 p-4 bg-pink-300 flex items-end overflow-y-hidden">
-          <div
-            ref={chatContainerRef}
-            className="w-full h-full scrollbar-hide overflow-y-auto"
-          >
-            <div className="px-12 mx-auto -p-8 flex flex-col gap-y-4 self-end">
-              {pastTexts.map((text, index) => (
-                <DisplayBox
-                  key={index}
-                  text={text}
-                  isQuestion={index % 2 === 0}
-                  isPast={true}
-                />
-              ))}
-              {question && (
-                <AnimatePresence>
-                  <motion.div
-                    key={`question-${toggle}`}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: "spring" }}
-                  >
-                    <DisplayBox text={question} isQuestion={true} />
-                  </motion.div>
-                </AnimatePresence>
-              )}
-              {answers && answers[0] && (
-                <AnimatePresence>
-                  <motion.div
-                    key={`answer-${toggle}`}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: "spring" }}
-                  >
-                    <DisplayBox text={answers[0]} setLoading={setLoading} />
-                  </motion.div>
-                </AnimatePresence>
-              )}
+        <div className="col-span-5 p-4 flex items-end overflow-y-hidden bg-[url('/background.png')] bg-cover bg-center bg-no-repeat">
+          <div ref={chatContainerRef} className="w-full h-full">
+            <div className="h-[88%] pb-4 scrollbar-hide overflow-y-auto">
+              <div className="pl-14 pr-12 mx-auto flex flex-col gap-y-4 self-end">
+                {pastTexts.map((text, index) => (
+                  <DisplayBox
+                    key={index}
+                    text={text}
+                    isQuestion={index % 2 === 0}
+                    isPast={true}
+                  />
+                ))}
+                {question && (
+                  <AnimatePresence>
+                    <motion.div
+                      key={`question-${toggle}`}
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ type: "spring" }}
+                    >
+                      <DisplayBox text={question} isQuestion={true} />
+                    </motion.div>
+                  </AnimatePresence>
+                )}
+                {answers && answers[0] && (
+                  <AnimatePresence>
+                    <motion.div
+                      key={`answer-${toggle}`}
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ type: "spring" }}
+                    >
+                      <DisplayBox
+                        text={answers[0]}
+                        setLoading={setLoading}
+                        loading={loading}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                )}
+              </div>
             </div>
             <div className="z-50 sticky bottom-0">
               <Textbox
@@ -93,6 +84,7 @@ export default function Home() {
                 loading={loading}
                 setLoading={setLoading}
                 moveToPastTexts={moveToPastTexts}
+                chatContainerRef={chatContainerRef}
               />
             </div>
           </div>

@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useState, KeyboardEvent } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useState,
+  KeyboardEvent,
+  RefObject,
+} from "react";
 
 export default function Textbox({
   setQuestion,
@@ -7,6 +13,7 @@ export default function Textbox({
   loading,
   setLoading,
   moveToPastTexts,
+  chatContainerRef,
 }: {
   setQuestion: Dispatch<SetStateAction<string>>;
   setAnswers: Dispatch<SetStateAction<string[]>>;
@@ -14,6 +21,7 @@ export default function Textbox({
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
   moveToPastTexts: Function;
+  chatContainerRef: RefObject<HTMLDivElement>;
 }) {
   const [inputText, setInputText] = useState("");
 
@@ -25,6 +33,11 @@ export default function Textbox({
       setToggle((prev) => !prev);
       setQuestion(inputText);
       setInputText("");
+      () =>
+        chatContainerRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
       try {
         await fetch("/api/answer", {
           method: "POST",
