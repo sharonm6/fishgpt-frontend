@@ -8,7 +8,7 @@ import {
 
 export default function Textbox({
   setQuestion,
-  setAnswers,
+    setAnswers,
   setToggle,
   loading,
   setLoading,
@@ -55,7 +55,6 @@ export default function Textbox({
   };
 
   return (
-    // <div className="w-full">
     <textarea
       value={inputText}
       onChange={(e) => setInputText(e.target.value)}
@@ -63,6 +62,5 @@ export default function Textbox({
       placeholder="Type your question and press Enter..."
       className="block w-full resize-none rounded-lg border border-gray-300 px-3.5 py-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:shadow-md sm:text-sm sm:leading-6"
     />
-    // </div>
   );
 }

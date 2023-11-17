@@ -13,6 +13,7 @@ export default function Home() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState([""]);
+  const [choice, setChoice] = useState(-1);
   const [pastTexts, setPastTexts] = useState<string[]>([
     "Example Question",
     "Example Answer",
@@ -29,7 +30,6 @@ export default function Home() {
 
   useEffect(() => {
     const getStatus = async () => {
-      console.log('GET STATUS FUNC')
       try {
         await fetch("/api/status", {
           method: "POST",
@@ -59,10 +59,11 @@ export default function Home() {
       <NavBar />
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">
-          {/* <SocketInitializer
+          <SocketInitializer
             connected={connected}
             setConnected={setConnected}
-          /> */}
+            setChoice={setChoice}
+          />
           <div className="row-span-2 bg-gray-800">
             <StreamerInfo
               username="FishGPT"
@@ -96,18 +97,6 @@ export default function Home() {
                     </motion.div>
                   </AnimatePresence>
                 )}
-                {/* {loading && !answers && ( */}
-                  <AnimatePresence>
-                    <motion.div
-                      key={`answer-${toggle}`}
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ type: "spring" }}
-                    >
-                      <LoadingBox />
-                    </motion.div>
-                  </AnimatePresence>
-                {/* )} */}
                 {answers && answers[0] && (
                   <AnimatePresence>
                     <motion.div
@@ -124,6 +113,7 @@ export default function Home() {
                     </motion.div>
                   </AnimatePresence>
                 )}
+                {loading && <LoadingBox />}
               </div>
             </div>
             <div className="z-50 sticky bottom-0">

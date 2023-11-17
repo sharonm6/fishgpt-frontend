@@ -60,7 +60,7 @@ export default function DisplayBox({
         ) : (
           <TypeAnimation
             ref={ref}
-            sequence={[`${text}`, () => setLoading(false)]}
+            sequence={[() => setLoading(false), `${text}`]}
             speed={80}
             style={{ whiteSpace: "pre-line" }}
             cursor={false}
