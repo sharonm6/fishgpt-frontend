@@ -42,14 +42,14 @@ export default function Textbox({
   };
 
   return (
-    <div className="w-full">
-      <textarea
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-        onKeyDown={(e) => handleKeyPress(e)}
-        placeholder="Type your question and press Enter..."
-        className="inline-block w-full resize-none rounded-md border-0 px-3.5 py-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:shadow-md sm:text-sm sm:leading-6"
-      />
-    </div>
+    // <div className="w-full">
+    <textarea
+      value={inputText}
+      onChange={(e) => setInputText(e.target.value)}
+      onKeyDown={(e) => handleKeyPress(e)}
+      placeholder="Type your question and press Enter..."
+      className="inline-block w-full resize-none rounded-lg border border-gray-300 px-3.5 py-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:shadow-md sm:text-sm sm:leading-6"
+    />
+    // </div>
   );
 }
