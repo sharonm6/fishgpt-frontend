@@ -45,48 +45,52 @@ export default function Home() {
           <SocketInitializer />
           <div className="row-span-2">FishGPT</div>
         </div>
-        <div className="h-screen col-span-4 p-8 bg-pink-300 flex items-end">
-          <div ref={chatContainerRef} className="w-full h-full scrollbar-hide overflow-y-auto w-[85%] mx-auto flex flex-col gap-y-4">
-            {pastTexts.map((text, index) => (
-              <DisplayBox
-                key={index}
-                text={text}
-                isQuestion={index % 2 === 0}
-                isPast={true}
+        <div className="col-span-4 p-8 bg-pink-300 flex items-end">
+          <div ref={chatContainerRef} className="h-full scrollbar-hide overflow-y-auto w-[85%] mx-auto grid grid-rows-6">
+            <div className="row-span-5 flex flex-col gap-y-4">
+              {pastTexts.map((text, index) => (
+                <DisplayBox
+                  key={index}
+                  text={text}
+                  isQuestion={index % 2 === 0}
+                  isPast={true}
+                />
+              ))}
+              {question && (
+                <AnimatePresence>
+                  <motion.div
+                    key={`question-${toggle}`}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: "spring" }}
+                  >
+                    <DisplayBox text={question} isQuestion={true} />
+                  </motion.div>
+                </AnimatePresence>
+              )}
+              {answers && answers[0] && (
+                <AnimatePresence>
+                  <motion.div
+                    key={`answer-${toggle}`}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: "spring" }}
+                  >
+                    <DisplayBox text={answers[0]} setLoading={setLoading} />
+                  </motion.div>
+                </AnimatePresence>
+              )}
+            </div>
+            <div className="row-span-1 fixed end">
+              <Textbox 
+                setQuestion={setQuestion}
+                setAnswers={setAnswers}
+                setToggle={setToggle}
+                loading={loading}
+                setLoading={setLoading}
+                moveToPastTexts={moveToPastTexts}
               />
-            ))}
-            {question && (
-              <AnimatePresence>
-                <motion.div
-                  key={`question-${toggle}`}
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: "spring" }}
-                >
-                  <DisplayBox text={question} isQuestion={true} />
-                </motion.div>
-              </AnimatePresence>
-            )}
-            {answers && answers[0] && (
-              <AnimatePresence>
-                <motion.div
-                  key={`answer-${toggle}`}
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: "spring" }}
-                >
-                  <DisplayBox text={answers[0]} setLoading={setLoading} />
-                </motion.div>
-              </AnimatePresence>
-            )}
-            <Textbox 
-              setQuestion={setQuestion}
-              setAnswers={setAnswers}
-              setToggle={setToggle}
-              loading={loading}
-              setLoading={setLoading}
-              moveToPastTexts={moveToPastTexts}
-            />
+            </div>
           </div>
         </div>
       </div>

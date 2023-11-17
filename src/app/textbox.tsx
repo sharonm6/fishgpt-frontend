@@ -48,7 +48,7 @@ export default function Textbox({
         onChange={(e) => setInputText(e.target.value)}
         onKeyDown={(e) => handleKeyPress(e)}
         placeholder="Type your question and press Enter..."
-        className="w-full resize-none rounded-md border-0 px-3.5 py-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:shadow-md sm:text-sm sm:leading-6"
+        className="inline-block w-full resize-none rounded-md border-0 px-3.5 py-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:shadow-md sm:text-sm sm:leading-6"
       />
     </div>
   );
