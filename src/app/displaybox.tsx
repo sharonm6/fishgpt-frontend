@@ -7,17 +7,14 @@ export default function DisplayBox({
   setLoading = () => {},
   loading = false,
   isPast = false,
-  isErr = false,
 }: {
   text: String;
   isQuestion?: boolean;
   setLoading?: Function;
   loading?: boolean;
   isPast?: boolean;
-  isErr?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-
   useEffect(() => {
     let intervalId: any;
 
@@ -41,6 +38,16 @@ export default function DisplayBox({
     return () => clearInterval(intervalId);
   }, [loading]);
 
+  let errMsg = false;
+  if (
+    text ===
+    "Uh-oh! Our fish swam away from the keyboard. Please reel them back in and try again later!"
+  ) {
+    errMsg = true;
+  } else {
+    errMsg = false;
+  }
+
   return (
     <div className="flex items-start">
       {isQuestion ? (
@@ -58,7 +65,7 @@ export default function DisplayBox({
       )}
       <div
         className={`block w-full rounded-md border-0 px-3.5 py-2 bg-white ${
-          isErr ? "text-red-500" : "text-gray-900"
+          errMsg ? "text-red-500" : "text-gray-900"
         } shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6`}
       >
         {isQuestion || isPast ? (

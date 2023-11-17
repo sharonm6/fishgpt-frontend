@@ -56,11 +56,9 @@ export default function Textbox({
             return res.json();
           })
           .then((resJson) => {
-            console.log("resJson", resJson.data.content.split("\n"));
             setAnswers(resJson.data.content.split("\n"));
           });
       } catch (error) {
-        console.error(error);
         setIsErr(true);
         setAnswers([
           "Uh-oh! Our fish swam away from the keyboard. Please reel them back in and try again later!",

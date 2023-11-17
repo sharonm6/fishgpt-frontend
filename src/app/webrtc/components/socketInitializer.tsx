@@ -26,7 +26,6 @@ export default function SocketInitializer({
     });
 
     socket.on("coordsReceive", (data) => {
-      console.log(data.data);
       setChoice(data.data.quadrant);
     });
 

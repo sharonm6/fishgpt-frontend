@@ -1,3 +1,5 @@
+import { error } from "console";
+
 const apiKey = process.env.CHATGPT_API_KEY;
 const endpoint = "https://api.openai.com/v1/chat/completions";
 
@@ -30,7 +32,6 @@ export async function POST(request: Request) {
 
     const data = await response.json();
     const answer = data.choices[0].message;
-    console.log("ANS", answer);
     return Response.json({ data: answer });
   } catch (e) {
     return new Response("Error", {
