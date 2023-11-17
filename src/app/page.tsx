@@ -56,11 +56,14 @@ export default function Home() {
       <NavBar />
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">
-          <SocketInitializer setConnected={setConnected}/>
+          <SocketInitializer
+            connected={connected}
+            setConnected={setConnected}
+          />
           <div className="row-span-2 bg-gray-800">
             <StreamerInfo
               username="FishGPT"
-              status={connected? "LIVE" : "OFFLINE"}
+              status={connected ? "LIVE" : "OFFLINE"}
               profilePic="/goldfish.png"
               activity={activity}
             ></StreamerInfo>

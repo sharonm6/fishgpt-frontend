@@ -2,19 +2,17 @@
 import { useEffect, useState } from "react";
 import * as socketio from "socket.io-client";
 import ThoughtBubble from "@/app/thoughtbubble";
-import {
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export default function SocketInitializer({
+  connected,
   setConnected,
 }: {
+  connected: boolean;
   setConnected: Dispatch<SetStateAction<boolean>>;
-}){
+}) {
   const [imageSrc, setImageSrc] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
-
 
   // const coordToPadding = (x: number, y: number, widthHeight: number[]) => {
   //   console.log("calc padding", 'x', x, 'y', y);
@@ -26,7 +24,7 @@ export default function SocketInitializer({
   //   }
   //   let top = y - 380;
   //   console.log('left', left, 'right', right, 'top', top);
-   
+
   // };
 
   // useEffect(() => {
@@ -83,16 +81,27 @@ export default function SocketInitializer({
 
   return (
     <div className="relative z-0 row-span-4 bg-black flex justify-center">
-      {imageSrc && (
+      {connected ? (
         <>
-          <div className={`absolute z-10`} style={{ marginRight: coords.x + 400 , marginTop: coords.y + 10}}>
-          {/* <ThoughtBubble text="..." /> */}
-            asdf
-          </div>
-          <img className="h-full" src={imageSrc} alt="Received Image" />
+          {imageSrc && (
+            <>
+              <div
+                className={`absolute z-10`}
+                style={{
+                  marginRight: coords.x + 400,
+                  marginTop: coords.y + 10,
+                }}
+              >
+                {/* <ThoughtBubble text="..." /> */}
+                asdf
+              </div>
+              <img className="h-full" src={imageSrc} alt="Received Image" />
+            </>
+          )}
         </>
+      ) : (
+        <img className="h-full" src="/fishswim.gif" alt="Received Image" />
       )}
     </div>
   );
 }
-

@@ -18,18 +18,17 @@ export async function POST() {
     ],
   };
 
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(requestBody),
-  });
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(requestBody),
+    });
 
-  const data = await response.json();
-  const answer = data.choices[0].message;
-
-  if (!data) {
+    const data = await response.json();
+    const answer = data.choices[0].message;
+    return Response.json({ data: answer });
+  } catch (e) {
     return new Response("Error", { status: 500 });
   }
-
-  return Response.json({ data: answer });
 }
