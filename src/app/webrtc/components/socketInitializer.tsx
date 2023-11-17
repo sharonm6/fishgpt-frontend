@@ -39,7 +39,6 @@ export default function SocketInitializer({
     });
     socket.on("connect", async () => {
       console.log("Successfully connected to FishGPT backend!");
-      setConnected(true);
       // create a webRTC offer
       // const rtcp = new RTCPeerConnection();
       // const offer = await rtcp.createOffer();
@@ -58,6 +57,7 @@ export default function SocketInitializer({
     });
 
     socket.on("imageReceive", (data) => {
+      setConnected(true);
       const uint8Array = new Uint8Array(
         atob(data.data)
           .split("")
