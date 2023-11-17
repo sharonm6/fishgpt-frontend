@@ -1,6 +1,6 @@
 "use client";
 import SocketInitializer from "./webrtc/components/socketInitializer";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import NavBar from "./navbar";
@@ -8,6 +8,7 @@ import Textbox from "./textbox";
 import DisplayBox from "./displaybox";
 
 export default function Home() {
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState([""]);
   const [pastTexts, setPastTexts] = useState<string[]>([
@@ -25,6 +26,17 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    // Function to scroll chat container to the bottom
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+    };
+     // Scroll to bottom whenever messages change
+     scrollToBottom();
+    }, [pastTexts]); 
+
   return (
     <main className="h-screen">
       <NavBar />
@@ -33,8 +45,8 @@ export default function Home() {
           <SocketInitializer />
           <div className="row-span-2">FishGPT</div>
         </div>
-        <div className="col-span-4 p-8 bg-pink-300 flex items-end">
-          <div className="w-[85%] mx-auto flex flex-col gap-y-4">
+        <div className="h-screen col-span-4 p-8 bg-pink-300 flex items-end">
+          <div ref={chatContainerRef} className="w-full h-full scrollbar-hide overflow-y-auto w-[85%] mx-auto flex flex-col gap-y-4">
             {pastTexts.map((text, index) => (
               <DisplayBox
                 key={index}
@@ -67,7 +79,7 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
             )}
-            <Textbox
+            <Textbox 
               setQuestion={setQuestion}
               setAnswers={setAnswers}
               setToggle={setToggle}
