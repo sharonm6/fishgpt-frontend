@@ -6,14 +6,37 @@ import ThoughtBubble from "@/app/thoughtbubble";
 export default function SocketInitializer() {
   const [imageSrc, setImageSrc] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [leftPadding, setLeftPadding] = useState(0)
+  const [topPadding, setTopPadding] = useState(0)
 
   const coordToPadding = (x: number, y: number, widthHeight: number[]) => {
-    console.log("=> coordToPadding", x, y, widthHeight);
-    return [widthHeight[0] * (x / 640), widthHeight[1] * (y / 480)];
+    console.log("calc padding");
+
+    
+    
   };
 
   useEffect(() => {
-    const socket = socketio.io("https://marshy-glaze-brazil.glitch.me/");
+    spawnRandomCoordinates();
+  }, [])
+
+  function spawnRandomCoordinates(): void {
+    const width: number = 640;
+    const height: number = 480;
+  
+    setInterval(() => {
+      const randomX: number = Math.floor(Math.random() * width);
+      const randomY: number = Math.floor(Math.random() * height);
+  
+      setCoords({x: randomX, y: randomY});
+      coordToPadding(randomX, randomY, [width, height]);
+
+      console.log(`Random coordinates: (${randomX},${randomY})`);
+    }, 10000);
+  }
+
+  useEffect(() => {
+    const socket = socketio.io("https://4fa8-76-78-137-157.ngrok-free.app/");
 
     socket.on("connect", async () => {
       console.log("Successfully connected to FishGPT backend!");
@@ -64,7 +87,7 @@ export default function SocketInitializer() {
     <div className="relative z-0 row-span-4 bg-black flex justify-center">
       {imageSrc && (
         <>
-          <span className="absolute z-10 ml-[150px] mt-[150px]">
+          <span className={`absolute z-10 ml-[${leftPadding}px] mt-[${topPadding}px]`}>
             <ThoughtBubble text="hello, i am a thought bubble" />
           </span>
           <span className="absolute z-20 ml-[150px] mt-[150px] pt-8">

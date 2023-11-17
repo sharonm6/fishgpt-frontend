@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import NavBar from "./navbar";
 import Textbox from "./textbox";
 import DisplayBox from "./displaybox";
+import StreamerInfo from "./streamerinfo";
 
 export default function Home() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -32,7 +33,9 @@ export default function Home() {
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">
           <SocketInitializer />
-          <div className="row-span-2">FishGPT</div>
+          <div className="row-span-2 bg-gray-800">
+            <StreamerInfo username="FishGPT" status="LIVE" game="game" description="description" profilePic="/goldfish.png"></StreamerInfo>
+            </div>
         </div>
         <div className="col-span-5 p-4 flex items-end overflow-y-hidden bg-[url('/background.png')] bg-cover bg-center bg-no-repeat">
           <div ref={chatContainerRef} className="w-full h-full">
