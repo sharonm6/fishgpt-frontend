@@ -56,7 +56,11 @@ export default function Textbox({
             return res.json();
           })
           .then((resJson) => {
-            setAnswers(resJson.data.content.split("\n"));
+            var parsedAnswers: string[] = resJson.data.content.split("*").filter((elem: string)=>{return elem.length > 0});
+            parsedAnswers = parsedAnswers.map((elem) => {
+              return elem.replaceAll("* ", "").trim();
+            })
+            setAnswers(parsedAnswers);
           });
       } catch (error) {
         setIsErr(true);
