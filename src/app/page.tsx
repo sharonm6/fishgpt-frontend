@@ -54,7 +54,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen overflow-y-clip scrollbar-hide">
+    <main className="h-screen scrollbar-hide">
       <NavBar />
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">
@@ -70,6 +70,13 @@ export default function Home() {
               profilePic="/goldfish.png"
               activity={activity}
             ></StreamerInfo>
+            <div className="rounded-lg mx-6 mb-4 bg-gray-700 p-4 text-white">
+              {`FishGPT is an online chatbot built with ChatGPT that allows a
+                user to simultaneously watch a fish and ask it questions to be
+                answered! It uses computer vision to track the fish location in
+                the tank to select a response and simulate different fish
+                emotions and mood.`}
+            </div>
           </div>
         </div>
         <div className="col-span-5 p-4 flex items-end overflow-y-hidden bg-[url('/background.png')] bg-cover bg-center bg-no-repeat">
