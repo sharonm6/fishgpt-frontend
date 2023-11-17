@@ -1,5 +1,3 @@
-import { error } from "console";
-
 const apiKey = process.env.CHATGPT_API_KEY;
 const endpoint = "https://api.openai.com/v1/chat/completions";
 

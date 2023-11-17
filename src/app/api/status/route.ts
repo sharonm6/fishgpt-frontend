@@ -31,9 +31,8 @@ export async function POST(request: Request) {
     const answer = data.choices[0].message;
     return Response.json({ data: answer });
   } catch (e) {
-    return new Response(
-      "Uh-oh! Our fish swam away from the keyboard. Please reel them back in and try again later!",
-      { status: 500 }
-    );
+    return new Response("Error", {
+      status: 500,
+    });
   }
 }

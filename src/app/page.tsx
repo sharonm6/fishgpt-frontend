@@ -21,7 +21,6 @@ export default function Home() {
     `"Swimming through life's waves 🌊"`
   );
   const [isErr, setIsErr] = useState(false);
-
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
@@ -39,7 +38,9 @@ export default function Home() {
           .then((res) => res.json())
           .then((resJson) => setActivity(resJson.data.content));
       } catch (error) {
-        console.error("error");
+        console.error(
+          "Uh-oh! Our fish swam away from the keyboard. Please reel them back in and try again later!"
+        );
       }
     };
 
