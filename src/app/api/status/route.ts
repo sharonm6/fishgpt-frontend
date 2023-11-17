@@ -1,13 +1,11 @@
 const apiKey = process.env.CHATGPT_API_KEY;
 const endpoint = "https://api.openai.com/v1/chat/completions";
 
-export async function POST(request: Request) {
+export async function POST() {
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${apiKey}`,
   };
-
-  const message = await request.json();
 
   const requestBody = {
     model: "gpt-3.5-turbo-1106",
@@ -15,9 +13,8 @@ export async function POST(request: Request) {
       {
         role: "system",
         content:
-          "You are a helpful assistant. Your name is FishGPT. Give us four different answers to the question in four separate sentences separated by a newline character.",
+          "You are a helpful assistant. Your name is FishGPT. Generate a fun status blurb that is less than 5 words.",
       },
-      { role: "user", content: message.prompt },
     ],
   };
 

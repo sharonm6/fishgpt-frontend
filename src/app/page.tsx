@@ -20,6 +20,28 @@ export default function Home() {
   ]);
   const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activity, setActivity] = useState(
+    `"Swimming through life's waves 🌊"`
+  );
+
+  useEffect(() => {
+    const getStatus = async () => {
+      try {
+        await fetch("/api/status", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((resJson) => setActivity(resJson.data.content));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getStatus();
+  }, []);
 
   const moveToPastTexts = () => {
     if (question != "" && answers && answers[0] != "") {
@@ -34,8 +56,13 @@ export default function Home() {
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">
           <SocketInitializer />
           <div className="row-span-2 bg-gray-800">
-            <StreamerInfo username="FishGPT" status="LIVE" game="game" description="description" profilePic="/goldfish.png"></StreamerInfo>
-            </div>
+            <StreamerInfo
+              username="FishGPT"
+              status="LIVE"
+              profilePic="/goldfish.png"
+              activity={activity}
+            ></StreamerInfo>
+          </div>
         </div>
         <div className="col-span-5 p-4 flex items-end overflow-y-hidden bg-[url('/background.png')] bg-cover bg-center bg-no-repeat">
           <div ref={chatContainerRef} className="w-full h-full">
