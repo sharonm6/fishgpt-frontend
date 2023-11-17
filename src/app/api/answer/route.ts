@@ -31,7 +31,10 @@ export async function POST(request: Request) {
           I'm FishGPT, and it's so lonely here by myself.*
           Wow, didn't expect anyone to show up to this tank! I'm FishGPT!*`,
       },
-      { role: "user", content: "Please respond, in role, to: " +  message.prompt },
+      {
+        role: "user",
+        content: "Please respond, in role, to: " + message.prompt,
+      },
     ],
   };
 
