@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   const message = await request.json();
 
   const requestBody = {
-    model: "gpt-3.5-turbo-1106",
+    model: "gpt-3.5-turbo",
     messages: [
       {
         role: "system",

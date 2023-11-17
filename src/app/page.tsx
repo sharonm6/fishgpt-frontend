@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import NavBar from "./navbar";
 import Textbox from "./textbox";
 import DisplayBox from "./displaybox";
+import LoadingBox from "./loadingbox";
 import StreamerInfo from "./streamerinfo";
 
 export default function Home() {
@@ -28,12 +29,14 @@ export default function Home() {
 
   useEffect(() => {
     const getStatus = async () => {
+      console.log('GET STATUS FUNC')
       try {
         await fetch("/api/status", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({ prompt: 'Generate a fun status blurb that is less than 5 words.' }),
         })
           .then((res) => res.json())
           .then((resJson) => setActivity(resJson.data.content));
@@ -56,10 +59,10 @@ export default function Home() {
       <NavBar />
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">
-          <SocketInitializer
+          {/* <SocketInitializer
             connected={connected}
             setConnected={setConnected}
-          />
+          /> */}
           <div className="row-span-2 bg-gray-800">
             <StreamerInfo
               username="FishGPT"
@@ -93,6 +96,18 @@ export default function Home() {
                     </motion.div>
                   </AnimatePresence>
                 )}
+                {/* {loading && !answers && ( */}
+                  <AnimatePresence>
+                    <motion.div
+                      key={`answer-${toggle}`}
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ type: "spring" }}
+                    >
+                      <LoadingBox />
+                    </motion.div>
+                  </AnimatePresence>
+                {/* )} */}
                 {answers && answers[0] && (
                   <AnimatePresence>
                     <motion.div
