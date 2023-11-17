@@ -6,34 +6,26 @@ import ThoughtBubble from "@/app/thoughtbubble";
 export default function SocketInitializer() {
   const [imageSrc, setImageSrc] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [leftPadding, setLeftPadding] = useState(0);
-  const [topPadding, setTopPadding] = useState(0);
 
-  const coordToPadding = (x: number, y: number, widthHeight: number[]) => {
-    console.log("calc padding");
-  };
+
+  // const coordToPadding = (x: number, y: number, widthHeight: number[]) => {
+  //   console.log("calc padding", 'x', x, 'y', y);
+  //   let left = x - 270;
+  //   let right = 0;
+  //   if (left < 0){
+  //     right = -left;
+  //     left = 0;
+  //   }
+  //   let top = y - 380;
+  //   console.log('left', left, 'right', right, 'top', top);
+   
+  // };
 
   // useEffect(() => {
-  //   // spawnRandomCoordinates();
-  // }, []);
-
-  function spawnRandomCoordinates(): void {
-    const width: number = 640;
-    const height: number = 480;
-
-    setInterval(() => {
-      const randomX: number = Math.floor(Math.random() * width);
-      const randomY: number = Math.floor(Math.random() * height);
-
-      setCoords({ x: randomX, y: randomY });
-      coordToPadding(randomX, randomY, [width, height]);
-
-      console.log(`Random coordinates: (${randomX},${randomY})`);
-    }, 10000);
-  }
+  //   console.log('leftpadding', leftPadding, 'rightPadding', rightPadding, 'topPadding', topPadding);
+  // }, [leftPadding, rightPadding, topPadding]);
 
   useEffect(() => {
-    console.log("RAN USE EFFECT");
     const socket = socketio.io("https://ea1b-76-78-137-157.ngrok-free.app/", {
       extraHeaders: {
         "ngrok-skip-browser-warning": "true",
@@ -52,20 +44,12 @@ export default function SocketInitializer() {
       // }
       // socket.emit('clientOffer', offer_obj);
     });
-    console.log(socket);
-    socket.on("connect_error", (err) => {
-      console.error("Connection error:", err);
-    });
-    socket.on("connect_timeout", () => {
-      console.error("Connection timeout");
-    });
-    socket.on("error", (error) => {
-      console.error("Socket.io error:", error);
-    });
+
     socket.on("coordsReceive", (data) => {
       console.log(data.data);
       setCoords(data.data);
     });
+
     socket.on("imageReceive", (data) => {
       const uint8Array = new Uint8Array(
         atob(data.data)
@@ -75,13 +59,12 @@ export default function SocketInitializer() {
       const blob = new Blob([uint8Array], { type: "image/jpeg" });
       const imageUrl = URL.createObjectURL(blob);
       setImageSrc(imageUrl);
-      var img = new Image();
-      img.src = imageUrl;
-      img.onload = function () {
-        console.log(
-          coordToPadding(coords.x, coords.y, [img.width, img.height])
-        );
-      };
+      // var img = new Image();
+      // img.src = imageUrl;
+      // img.onload = function () {
+      //   console.log('coords pre to padding', coords);
+      //   // coordToPadding(coords.x, coords.y, [img.width, img.height]);
+      // };
     });
     return () => {
       socket.disconnect();
@@ -92,14 +75,10 @@ export default function SocketInitializer() {
     <div className="relative z-0 row-span-4 bg-black flex justify-center">
       {imageSrc && (
         <>
-          <span
-            className={`absolute z-10 ml-[${leftPadding}px] mt-[${topPadding}px]`}
-          >
-            {/* <ThoughtBubble text="hello, i am a thought bubble" /> */}
-          </span>
-          <span className="absolute z-20 ml-[150px] mt-[150px] pt-8">
-            <p>Hello</p>
-          </span>
+          <div className={`absolute z-10`} style={{ marginRight: coords.x + 400 , marginTop: coords.y + 10}}>
+          {/* <ThoughtBubble text="..." /> */}
+            asdf
+          </div>
           <img className="h-full" src={imageSrc} alt="Received Image" />
         </>
       )}
