@@ -2,8 +2,16 @@
 import { useEffect, useState } from "react";
 import * as socketio from "socket.io-client";
 import ThoughtBubble from "@/app/thoughtbubble";
+import {
+  Dispatch,
+  SetStateAction,
+} from "react";
 
-export default function SocketInitializer() {
+export default function SocketInitializer({
+  setConnected,
+}: {
+  setConnected: Dispatch<SetStateAction<boolean>>;
+}){
   const [imageSrc, setImageSrc] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
 
@@ -33,6 +41,7 @@ export default function SocketInitializer() {
     });
     socket.on("connect", async () => {
       console.log("Successfully connected to FishGPT backend!");
+      setConnected(true);
       // create a webRTC offer
       // const rtcp = new RTCPeerConnection();
       // const offer = await rtcp.createOffer();
@@ -68,6 +77,7 @@ export default function SocketInitializer() {
     });
     return () => {
       socket.disconnect();
+      setConnected(false);
     };
   }, []);
 
@@ -85,3 +95,4 @@ export default function SocketInitializer() {
     </div>
   );
 }
+

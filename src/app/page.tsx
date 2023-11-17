@@ -24,6 +24,8 @@ export default function Home() {
     `"Swimming through life's waves 🌊"`
   );
 
+  const [connected, setConnected] = useState(false);
+
   useEffect(() => {
     const getStatus = async () => {
       try {
@@ -54,11 +56,11 @@ export default function Home() {
       <NavBar />
       <div className="h-[calc(100vh-48px)] grid grid-cols-12">
         <div className="col-span-7 grid grid-rows-6 bg-blue-300">
-          <SocketInitializer />
+          <SocketInitializer setConnected={setConnected}/>
           <div className="row-span-2 bg-gray-800">
             <StreamerInfo
               username="FishGPT"
-              status="LIVE"
+              status={connected? "LIVE" : "OFFLINE"}
               profilePic="/goldfish.png"
               activity={activity}
             ></StreamerInfo>
