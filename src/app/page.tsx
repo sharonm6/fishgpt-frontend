@@ -46,12 +46,12 @@ export default function Home() {
           <SocketInitializer />
           <div className="row-span-2">FishGPT</div>
         </div>
-        <div className="col-span-4 p-8 bg-pink-300 flex items-end overflow-y-hidden">
+        <div className="col-span-4 p-4 bg-pink-300 flex items-end overflow-y-hidden">
           <div
             ref={chatContainerRef}
-            className="h-full scrollbar-hide overflow-y-auto"
+            className="w-full h-full scrollbar-hide overflow-y-auto"
           >
-            <div className="w-[85%] mx-auto flex flex-col gap-y-4 self-end">
+            <div className="px-12 mx-auto -p-8 flex flex-col gap-y-4 self-end">
               {pastTexts.map((text, index) => (
                 <DisplayBox
                   key={index}
