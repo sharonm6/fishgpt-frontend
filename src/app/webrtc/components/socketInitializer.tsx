@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import * as socketio from "socket.io-client";
 import { Dispatch, SetStateAction } from "react";
 
+const SOCKETIO_SERVER: string = process.env.SOCKETIO_SERVER || "localhost:5000";
+
 export default function SocketInitializer({
   connected,
   setConnected,
   setChoice,
-  setViewers
+  setViewers,
 }: {
   connected: boolean;
   setConnected: Dispatch<SetStateAction<boolean>>;
@@ -18,7 +20,7 @@ export default function SocketInitializer({
 
   useEffect(() => {
     // TODO: change the url to be the right one
-    const socket = socketio.io("http://localhost:5000", {
+    const socket = socketio.io(SOCKETIO_SERVER, {
       extraHeaders: {
         "ngrok-skip-browser-warning": "true",
       },
