@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import * as socketio from "socket.io-client";
 import { Dispatch, SetStateAction } from "react";
 
-const SOCKETIO_SERVER: string = process.env.SOCKETIO_SERVER || "localhost:5000";
-
 export default function SocketInitializer({
   connected,
   setConnected,
@@ -19,8 +17,7 @@ export default function SocketInitializer({
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
-    // TODO: change the url to be the right one
-    const socket = socketio.io(SOCKETIO_SERVER, {
+    const socket = socketio.io("https://5c6e-128-195-95-46.ngrok-free.app/", {
       extraHeaders: {
         "ngrok-skip-browser-warning": "true",
       },
